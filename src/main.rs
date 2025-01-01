@@ -8,12 +8,25 @@ use clap::Parser;
 
 #[derive(Parser)]
 struct Cli {
-    code: String,
+    #[clap(short, long)]
+    code: bool,
+
+    #[arg()]
+    file: String,
 }
 
 fn main() {
     let args = Cli::parse();
-    let mut hny = HnyFuck::new(TokenStream::from_str(&args.code));
+    let code = if args.code {
+        args.file
+    } else {
+        std::fs::read_to_string(&args.file).unwrap_or_else(|e| {
+            eprintln!("Error reading file: {}", e);
+            std::process::exit(1);
+        })
+    };
+
+    let mut hny = HnyFuck::from_str(&code);
     hny.run();
 }
 
@@ -188,6 +201,10 @@ impl HnyFuck {
             stream,
             state: State::new(),
         }
+    }
+
+    fn from_str(input: &str) -> Self {
+        Self::new(TokenStream::from_str(input))
     }
 
     fn run(&mut self) {
