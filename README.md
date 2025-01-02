@@ -1,7 +1,7 @@
 # Brain fuck consisted of "Happy New Year"
 
 # Usage
-`a` => `Happy New`
+`<` => `Happy New`
 `>` =>  `New Year`
 `+` => `Year Happy`
 `-` => `Happy Year`
