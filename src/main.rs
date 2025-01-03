@@ -39,7 +39,7 @@ const INPUT: (&str, &str) = ("New", "Happy");
 const LOOP_START: (&str, &str) = ("Happy", "Happy");
 const LOOP_END: (&str, &str) = ("New", "New");
 
-fn from_branfuck(code: &str) -> HnyFuck {
+fn from_brainfuck(code: &str) -> HnyFuck {
     let hny_code = code
         .chars()
         .map(|c| match c {
@@ -264,21 +264,21 @@ mod test {
 
     #[test]
     fn test_increment() {
-        let mut hny = from_branfuck("+++++");
+        let mut hny = from_brainfuck("+++++");
         hny.run();
         assert_eq!(hny.state.state[0], 5);
     }
 
     #[test]
     fn test_decrement() {
-        let mut hny = from_branfuck("+++++-----");
+        let mut hny = from_brainfuck("+++++-----");
         hny.run();
         assert_eq!(hny.state.state[0], 0);
     }
 
     #[test]
     fn test_shift_left_right() {
-        let mut hny = from_branfuck("+++++>+++++<");
+        let mut hny = from_brainfuck("+++++>+++++<");
         dbg!(&hny);
         hny.run();
         assert_eq!(hny.state.state[0], 5);
@@ -287,7 +287,7 @@ mod test {
 
     #[test]
     fn test_loop() {
-        let mut hny = from_branfuck("+++++[>+++++<-]");
+        let mut hny = from_brainfuck("+++++[>+++++<-]");
         hny.run();
         assert_eq!(hny.state.state[0], 0);
         assert_eq!(hny.state.state[1], 25);
